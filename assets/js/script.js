@@ -4,6 +4,12 @@ var searchBtnEl = document.querySelector("#search-button");
 var formEl = document.querySelector("#form-container");
 var watchEl = document.querySelector("#watch-later-btn");
 
+//script for youtube player
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
 var watchHandler = function(event){
 
     console.log("hi");
@@ -18,13 +24,53 @@ var searchHandler = function(event){
     getInfo(movie);
     getTrailer(movie);
 }
+//API used to gather top results video id and generate an embedded youtube video of movie trailer
+var getTrailer = function(movie){      
 
-var getTrailer = function(data){
-feature/getInfo
-    data = data.trim()
+    movie = movie.trim().replaceAll(" ", "%20");
+
+    var apiUrl = "https://youtube.googleapis.com/youtube/v3/search?q=" + movie + "%20movie%20trailer&key=AIzaSyAJt6A_-FzpJ3d5W9ARN1XMMQR_hqWNDVE"
+
+    fetch(apiUrl)
+    .then(function(response){
+        if (response.ok) {
+            response.json().then(function(data) {
+                var player;
+            player = new YT.Player('player', {
+                 height: '390',
+                 width: '640',
+                 videoId: data.items[0].id.videoId,
+                 events: {
+                   'onReady': onPlayerReady,
+                   'onStateChange': onPlayerStateChange
+                 }
+            });    
+                
+            });
+                    
+        }
+        else {
+        alert("Error: " + response.statusText);
+        }
+
+    }
+    )};
+//functionality for embeded youtube player
+function onPlayerReady(event) {
+    event.target.playVideo();
+  }
+var done = false;
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING && !done) {
+      setTimeout(stopVideo, 6000);
+      done = true;
+    }
+
+  }
+function stopVideo() {
+    player.stopVideo();
 }
 
-// Create a function to fetch movie data from the IMDB API
 var getInfo = function(movie){
     movie = movie.trim().replaceAll(" ", "%20")
     fetch("https://imdb8.p.rapidapi.com/title/auto-complete?q="+movie, {
@@ -97,7 +143,7 @@ console.log(data);
 
 
 
- main
+ 
 }
 
 
