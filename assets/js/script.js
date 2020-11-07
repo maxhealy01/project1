@@ -73,7 +73,7 @@ var getSuggestions = function() {
 var displaySuggestions = function(movieArray, searchGrab) {
     var movieID = "";
     suggestionsObjectArray = [];
-    var iCantBelieveIHaveToDoThisNumbersArray = [];
+    var preventDuplicatesArray = [];
         
     for(i = 0; i < movieArray.length; i++) {
         if (movieArray[i].title === searchGrab) {
@@ -90,11 +90,11 @@ var displaySuggestions = function(movieArray, searchGrab) {
                 for (i = 0; i < 5; i++) {
                     j = Math.floor(Math.random() * 20);
 
-                    while(iCantBelieveIHaveToDoThisNumbersArray.includes(j)) {
+                    while(preventDuplicatesArray.includes(j)) {
                         j = Math.floor(Math.random() * 20);
                     }
 
-                    iCantBelieveIHaveToDoThisNumbersArray.push(j);
+                    preventDuplicatesArray.push(j);
 
                     var suggestionsObject = {
                         title: "",
