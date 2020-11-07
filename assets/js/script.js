@@ -20,6 +20,7 @@ var searchHandler = function(event){
 }
 
 var getTrailer = function(data){
+feature/getInfo
     data = data.trim()
 }
 
@@ -85,6 +86,18 @@ var getInfo = function(movie){
 // Create a function to store variables about the movie
 var showInfo = function(title, stars, year, plot, genres, imgUrl){
     console.log(title, stars, year, plot, genres, imgUrl)
+
+    console.log(data);
+
+}
+
+var getInfo = function(data){
+
+console.log(data);
+
+
+
+ main
 }
 
 
