@@ -17,27 +17,11 @@ var movieObject = {
 var suggestionsObjectArray = [];
 var j;
 
-// var watchHandler = function(event){
-
-// }
-
-// var searchHandler = function(event){
-//     event.preventDefault();
-
-//      var movie = document.querySelector("#search-input").value
-
-//     getInfo(movie);
-//     getTrailer(movie);
-// }
-
-// var getTrailer = function(data){
-//     data = data.trim()
-// }
-
 var getInfo = function() {
     var searchGrab = document.querySelector("#search-input").value;
     var apiUrl = "http://omdbapi.com/?t=" + searchGrab + "&apikey=4b6a7602";
 
+    // Fetch from OMDB and store information inside our movie object
     fetch(apiUrl)
         .then(function(response) {
             response.json().then(function(response) {
@@ -61,6 +45,10 @@ var getSuggestions = function() {
     var searchGrab = document.querySelector("#search-input").value;
     var apiUrl = "https://api.themoviedb.org/3/search/movie?api_key=b7c4be357f010f43e3a269dfe7a54a8d&query=" + searchGrab;
  
+    // Movies on TMBD can't be searched individually like they can be on OMDB, so this searches for the movie on TMDB and gets an array of every movie containing what was searched 
+    // for. For instance, "Avatar" will return Avatar and Avatar: The Last Airbender. 
+    //
+    // The reason to do this is because TMDB actually has a query to get a list of recommended movies, while OMBD does not.
     fetch(apiUrl)
         .then(function(response) {
             response.json().then(function(response) {
@@ -75,6 +63,8 @@ var displaySuggestions = function(movieArray, searchGrab) {
     suggestionsObjectArray = [];
     var preventDuplicatesArray = [];
         
+    // This for loop searches for the first movie in the array that matches the search. Unfortunately, there are some movies with the same name. There are two Avatar movies, for
+    // instance. Oh well. This returns the id number of what is most likely the most relevant search.
     for(i = 0; i < movieArray.length; i++) {
         if (movieArray[i].title === searchGrab) {
             movieID = movieArray[i].id;
@@ -82,8 +72,12 @@ var displaySuggestions = function(movieArray, searchGrab) {
         }
     }
     
+    // Now we use the recommendations query, which requires a movieID. This, unfortunately, can't be searched by title. 
     var apiUrl = "https://api.themoviedb.org/3/movie/" + movieID + "/recommendations?api_key=b7c4be357f010f43e3a269dfe7a54a8d&language=en-US";
     
+
+    // The recommendation query gives us an array of 20 recommended movies. This section randomly grabs five from the array and pushes them into an object array with the poster image
+    // and title as data fields. 
     fetch(apiUrl)
         .then(function(response) {
             response.json().then(function(response) {
@@ -110,68 +104,65 @@ var displaySuggestions = function(movieArray, searchGrab) {
         })
 }
 
-// formEl.addEventListener("submit", searchHandler);
 formEl.addEventListener("submit", () => {
     getInfo();
     getSuggestions();
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// formEl.addEventListener("submit", searchHandler);
+
 // watchEl.addEventListener("click", watchHandler);
 
+// var watchHandler = function(event){
 
+// }
 
+// var searchHandler = function(event){
+//     event.preventDefault();
 
+//      var movie = document.querySelector("#search-input").value
 
+//     getInfo(movie);
+//     getTrailer(movie);
+// }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// var getTrailer = function(data){
+//     data = data.trim()
+// }
 
 // // Create a function to fetch movie data from the IMDB API
 // var getInfo = function(movie){
