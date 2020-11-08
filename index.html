@@ -3,40 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Movie Search?</title>
+
+    <!-- STYLES -->
+    <!-- Bulma style sheet -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <!-- style sheet -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins&display=swap" rel="stylesheet">
+
+    <!-- font icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 </head>
 
 <body>
-
-    <header>
-        <nav>
-            <div id="search-area"><!-- search div -->
-                <form id="form-container">
-                    <input type="text" id="search-input">
-                    <button id="search-button" type="submit">Search</button>
-                </form>
-            </div>
-            <div id="title"><!-- Title div -->
-                <h2>Title</h2>
-            </div>
-            <div id="watch-later-area"><!-- watch later button -->
-                <button id="watch-later-btn">Watch Later</button>
-            </div>
-        </nav>
-    </header>
-    
-    <main>
-        <div id="info-container"><!-- Info container -->
-        
+    <!-- NAVBAR -->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <!-- title/logo section -->
+        <div id="page-title" class="navbar-brand-desktop is-centered">
+            <h1 class="navbar-item mx-4 px-6 navbar-title">Movie Search?</h1>
         </div>
 
-        <div id="trailer-container"><!-- trailer container -->
-                                    
+        <!-- navbar search form -->
+        <div id="form-container" class="navbar-end">
+            <form id="form-container" class="navbar-item navbar-form mx-4 px-6">
+
+                <!-- input -->
+                <input name="movie-input" id="search-input" type="text" placeholder="Search for a movie" aut
+                ofocus="true" class="search-input" />
+
+                <!-- submit button -->
+                <button id="search-button" class="search-button" type="submit" >
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
         </div>
+    </nav>
+
+    <!-- MOVIE INFO SECTION -->
+    <main class="section movie-section" style="min-height: 100vh">
+        <div class="container mx-2">
+            <div class="columns is-centered">
+
+                <!-- COLUMN 1: movie poster section -->
+                <div class="column movie-image-section has-text-right-tablet has-text-centered">
+                    <!-- poster image -->
+                    <a href="assets/images/star-wars-image.jpeg" target="_blank" class="movie-link">
+                        <img src="assets/images/star-wars-image.jpeg" id="movie-image" class="movie-image">
+                    </a>
+                </div>
+
+                <!-- COLUMN 2: movie summary section -->
+                <div id="info-text" class="column has-text-light info-text">
+                        <!-- movie title -->
+                        <h2 class="is-title is-size-3 my-5">
+                            Title: Star Wars: The Rise of the Skywalker
+                        </h2>
+                        <div class="buttons">
+                            <!-- watch trailer button/link -->
+                            <a class="watch-trailer-button" id="watch-trailer-button" href="trailer.html" target="_blank">
+                                <i class="fas fa-play play-icon"></i>
+                                <span class="watch-trailer-text">Watch Trailer</span>
+                            </a>
+                            <!-- watch later button -->
+                            <button class="watch-later-button" id="watch-later-button">
+                                <i class="fas fa-plus-circle add-icon"> </i>
+                                <span class="watch-later-text">Add to Watch List</span>
+                            </button>
+                        </div>
+                        <!-- movie summary -->
+                        <p>Duration: 2h 22m</p>
+                        <p>Year: 2019</p>
+                        <p>Rating: PG-13</p>
+                        <p>Genre: Action-Adventure, Science Fiction</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe possimus natus sed provident dolor delectus amet labore quae similique, sunt consectetur consequuntur, quidem iste eius odio commodi est dolorum nemo?</p>
+                </div>
+
+                <!-- movie trailer section -->
+
+            </div>
+        </div>
+
     </main>
 
+
+
+    <!-- JAVASCRIPT -->
     <script src="./assets/js/script.js"></script>
-
-</body>
-
+    </body>
 </html>

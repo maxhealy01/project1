@@ -1,0 +1,152 @@
+
+
+/* VARIABLES */
+:root {
+--primary-color:rgb(170, 231, 218);
+--secondary-color:rgb(103, 141, 133);
+
+--logo-font: 'Bebas Neue', cursive;
+--content-font:'Poppins', sans-serif;
+}
+
+/* BACKGROUND */
+body {
+    background-image: url(/assets/images/gradient-bg-dark2.jpg);
+    background-repeat: repeat;
+    background-size: cover;
+    font-family: var(--content-font);
+}
+
+
+/* NAVIGATION BAR */
+.navbar {
+    background: rgba(241, 241, 241, 0);
+    background-image: url('/assets/images/gradient-bg-dark4.jpg');
+    box-shadow: 3px 3px 10px rgb(7, 7, 7);
+}
+
+
+.navbar-title {
+    font-family: var(--logo-font);
+    color: var(--primary-color);
+    font-size: 50px;
+    padding-bottom: 0px
+}
+
+.navbar-form {
+    padding-top: 0px;
+    padding-bottom: 2rem;
+}
+
+@media screen and (min-width: 1024px){
+    .navbar-title {
+        padding-top: 1.2rem;
+    }
+    .navbar-form {
+        padding-top: 2rem;
+    }
+}
+
+.search-input {
+    border-radius: 30px;
+    padding:15px;
+    width: 20rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:20px;
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+.mobile-search-icon {
+    color: var(--primary-color);
+    font-size:25px;
+}
+
+.search-button {
+    margin-left: -42px;
+    margin-top: -5px;
+    border: none;
+    background-color: transparent;
+    color:rgb(107, 107, 107);
+    font-size: 25px;
+}
+
+.search-button:hover {
+    color:  rgb(1, 69, 170);
+    cursor: pointer;
+}
+
+.search-button:focus {
+    outline: none;
+}
+
+/* MOVIE INFO SECTION */
+.movie-image {
+
+}
+
+.movie-image {
+    max-width: 20rem;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px rgb(0,0,0,.75);
+    transform: scale(1);
+    filter: brightness(100%);
+    border: none .3rem rgba(255,255,255,0);
+    transition: all .25s ease;
+    transition-property: transform, box-shadow, filter, border;
+}
+
+.movie-image:hover {
+    transform: scale(1.08);
+    z-index: 99;
+    box-shadow: 3px 3px 6px 2px rgba(0,0,0,.7);
+    filter: brightness(105%);
+    border: solid .3rem rgba(255,255,255, .7);
+
+    transition: all .25s ease;
+    transition-property: transform, box-shadow, filter, border;
+}
+
+
+
+/* Button styles: watch later */
+.watch-later-button, .watch-trailer-button {
+    border: none;
+    width: 100%;
+    height:50px;
+    text-align: center;
+    background-color: var(--primary-color);
+    padding: 8px;
+    margin: 10px 0px;
+    font-size: 20px;
+    color: rgb(61, 61, 61);
+    border-radius: 5px;
+}
+
+.watch-later-button:hover, .watch-trailer-button:hover {
+    color: white;
+    background-color: var(--secondary-color);
+    cursor: pointer;
+}
+
+.watch-later-text, .watch-trailer-text {
+    font-family: 'Bebas Neue', cursive;
+}
+
+
+.info-text {
+    line-height: 2.1rem;
+}
+
+/* Play trailer in full screen */
+iframe {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+}
