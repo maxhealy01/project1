@@ -1,5 +1,4 @@
 
-
 /* VARIABLES */
 :root {
 --primary-color:rgb(170, 231, 218);
@@ -17,14 +16,12 @@ body {
     font-family: var(--content-font);
 }
 
-
 /* NAVIGATION BAR */
 .navbar {
     background: rgba(241, 241, 241, 0);
     background-image: url('/assets/images/gradient-bg-dark4.jpg');
     box-shadow: 3px 3px 10px rgb(7, 7, 7);
 }
-
 
 .navbar-title {
     font-family: var(--logo-font);
@@ -38,6 +35,7 @@ body {
     padding-bottom: 2rem;
 }
 
+/* NAVIGATION BAR FOR MOBILE */
 @media screen and (min-width: 1024px){
     .navbar-title {
         padding-top: 1.2rem;
@@ -84,10 +82,6 @@ body {
 
 /* MOVIE INFO SECTION */
 .movie-image {
-
-}
-
-.movie-image {
     max-width: 20rem;
     border-radius: 5px;
     box-shadow: 2px 2px 2px rgb(0,0,0,.75);
@@ -108,8 +102,6 @@ body {
     transition: all .25s ease;
     transition-property: transform, box-shadow, filter, border;
 }
-
-
 
 /* Button styles: watch later */
 .watch-later-button, .watch-trailer-button {
@@ -134,7 +126,6 @@ body {
 .watch-later-text, .watch-trailer-text {
     font-family: 'Bebas Neue', cursive;
 }
-
 
 .info-text {
     line-height: 2.1rem;
