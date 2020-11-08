@@ -10,7 +10,7 @@
 
 /* BACKGROUND */
 body {
-    background-image: url(/assets/images/gradient-bg-dark2.jpg);
+    background-image: url('../images/gradient-bg-dark2.jpg');
     background-repeat: repeat;
     background-size: cover;
     font-family: var(--content-font);
@@ -19,7 +19,7 @@ body {
 /* NAVIGATION BAR */
 .navbar {
     background: rgba(241, 241, 241, 0);
-    background-image: url('/assets/images/gradient-bg-dark4.jpg');
+    background-image: url('../images/gradient-bg-dark4.jpg');
     box-shadow: 3px 3px 10px rgb(7, 7, 7);
 }
 
