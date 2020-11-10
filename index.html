@@ -31,7 +31,7 @@
         <!-- navbar search form -->
         <div id="form-container" class="navbar-end">
             <form id="search-form" class="navbar-item navbar-form mx-4 px-6">
-
+              
                 <!-- search input -->
                 <input id="search-input" class="search-input" name="movie-input" type="text" placeholder="Search for a movie" aut
                 ofocus="true" />
@@ -73,8 +73,10 @@
                 <!-- COLUMN 2: movie summary section -->
                 <div id="movie-info-section" class="column has-text-light movie-info-section is-8 mt-5">
                         <!-- movie title -->
+                  
                         <h2 id="movie-title" class="is-title is-size-3 my-5">
                             Title: Star Wars: The Rise of Skywalker
+
                         </h2>
                         <div class="buttons">
                             <!-- watch trailer button/link -->
@@ -88,7 +90,9 @@
                                 <span class="watch-list-text">Add to Watch List</span>
                             </button>
                         </div>
-                        <!-- movie details (NOTE: if possible, use span tag ids for element selectors) -->
+
+                      <!-- movie details (NOTE: if possible, use span tag ids for element selectors) -->
+                      <div id="info-container">
                         <p>
                             <span class="movie-detail">Duration:</span><span id="duration"> 2h 22m</span>
                         </p>
@@ -102,14 +106,14 @@
                             <span class="movie-detail">Genre:</span><span id="duration"> Action-Adventure, Science Fiction</span>
                         </p>
                         <p id="synopsis" class="movie-synopsis mt-3"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. At libero fugiat ab quae voluptatum cumque obcaecati qui repellendus placeat architecto saepe nisi, harum eum cum totam odio ad labore pariatur?</p>
+                      </div>
+                  
                 </div>
             </div>
         </div>
     </main>
 
     <script src="https://apis.google.com/js/api.js"></script>
-    <script src="./assets/js/script.js"></script>
-
 
     <!-- JAVASCRIPT -->
     <script src="./assets/js/script.js"></script>
