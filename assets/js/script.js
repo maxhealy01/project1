@@ -9,6 +9,7 @@ var watchEl = document.querySelector("#watch-later-btn");
 var imgContainer = document.querySelector("#img-container");
 var titleContainer = document.querySelector("#title-container");
 var infoContainer = document.querySelector("#info-container");
+var trailerStartEl = document.querySelector("#button-container");
 
 var movieObject = {
     title:"Alien",
@@ -53,7 +54,7 @@ var getInfo = function() {
 //API used to gather top results video id and generate an embedded youtube video of movie trailer
 var getTrailer = function(movie) {      
 
-    movie = movie.trim().replaceAll(" ", "%20");
+    movie = movie.title.trim().replaceAll(" ", "%20");
 
     var apiUrl = "https://youtube.googleapis.com/youtube/v3/search?q=" + movie + "%20movie%20trailer&key=AIzaSyAJt6A_-FzpJ3d5W9ARN1XMMQR_hqWNDVE"
 
@@ -70,8 +71,8 @@ var getTrailer = function(movie) {
                    'onReady': onPlayerReady,
                    'onStateChange': onPlayerStateChange
                  }
-            });    
-                
+            });   
+
             });
                     
         }
@@ -96,7 +97,7 @@ function onPlayerStateChange(event) {
 
 var showInfo = function(data) {
     imgContainer.innerHTML = "<img src =" + data.poster + "class = 'movie-link movie-image'>";
-    imgContainer.innerHTML = "<a href =" + data.poster + "id='test' target='_blank' class='movie-link'></br><img src =" + data.poster + " id='movie-image' class='movie-image'></img>"
+    imgContainer.innerHTML = "<a href =" + data.poster + "id='test' target='_blank' class='movie-link'></br><img src =" + data.poster + "id='movie-image' class='movie-image'></img>"
     titleContainer.innerHTML = data.title;
     infoContainer.innerHTML =   "<p>Duration: " + data.runtime + "</p><p>Year: " + data.year + "</p><p>Rating: " + data.rated + "</p><p>Genre: " + data.genre + "</p><p>Plot: " + data.plot + "</p>";
 }
@@ -164,5 +165,9 @@ formEl.addEventListener("submit", () => {
     getInfo();
     getSuggestions();
 });
+
+// trailerStartEl.addEventListener("click", () => {
+//     getTrailer(movieObject);
+// });
 
 showInfo(movieObject);
