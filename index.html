@@ -34,8 +34,7 @@
             <form id="form-container" class="navbar-item navbar-form mx-4 px-6">
 
                 <!-- input -->
-                <input name="movie-input" id="search-input" type="text" placeholder="Search for a movie" aut
-                ofocus="true" class="search-input" />
+                <input name="movie-input" id="search-input" type="text" placeholder="Search for a movie" autofocus="true" class="search-input" />
 
                 <!-- submit button -->
                 <button id="search-button" class="search-button" type="submit" >
@@ -51,18 +50,15 @@
             <div class="columns is-centered">
 
                 <!-- COLUMN 1: movie poster section -->
-                <div class="column movie-image-section has-text-right-tablet has-text-centered">
+                <div class="column movie-image-section has-text-right-tablet has-text-centered" id="img-container">
                     <!-- poster image -->
-                    <a href="./assets/images/star-wars-image.jpeg" target="_blank" class="movie-link">
-                        <img src="./assets/images/star-wars-image.jpeg" id="movie-image" class="movie-image">
-                    </a>
                 </div>
 
                 <!-- COLUMN 2: movie summary section -->
                 <div id="info-text" class="column has-text-light info-text">
                         <!-- movie title -->
-                        <h2 class="is-title is-size-3 my-5">
-                            Title: Star Wars: The Rise of the Skywalker
+                        <h2 class="is-title is-size-3 my-5" id="title-container">
+                            Star Wars: The Rise of the Skywalker
                         </h2>
                         <div class="buttons">
                             <!-- watch trailer button/link -->
@@ -75,13 +71,10 @@
                                 <i class="fas fa-plus-circle add-icon"> </i>
                                 <span class="watch-later-text">Add to Watch List</span>
                             </button>
-                        </div>
-                        <!-- movie summary -->
-                        <p>Duration: 2h 22m</p>
-                        <p>Year: 2019</p>
-                        <p>Rating: PG-13</p>
-                        <p>Genre: Action-Adventure, Science Fiction</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe possimus natus sed provident dolor delectus amet labore quae similique, sunt consectetur consequuntur, quidem iste eius odio commodi est dolorum nemo?</p>
+                </div>
+                    <div id = "info-container">
+                        <!-- movie information container -->
+                    </div>
                 </div>
 
                 <!-- movie trailer section -->
@@ -97,8 +90,6 @@
     </main>
 
     <script src="https://apis.google.com/js/api.js"></script>
-    <script src="./assets/js/script.js"></script>
-
 
     <!-- JAVASCRIPT -->
     <script src="./assets/js/script.js"></script>

@@ -6,13 +6,18 @@ var trailerEl = document.querySelector("#trailer-container");
 var searchBtnEl = document.querySelector("#search-button");
 var formEl = document.querySelector("#form-container");
 var watchEl = document.querySelector("#watch-later-btn");
-
+var imgContainer = document.querySelector("#img-container");
+var titleContainer = document.querySelector("#title-container");
+var infoContainer = document.querySelector("#info-container");
 
 var movieObject = {
-    title:"",
-    genre: "",
-    plot: "",
-    poster: ""
+    title:"Alien",
+    genre: "Horror, Sci-Fi",
+    plot: "After a space merchant vessel receives an unknown transmission as a distress call, one of the crew is attacked by a mysterious life form and they soon realize that its life cycle has merely begun.",
+    poster: "https://m.media-amazon.com/images/M/MV5BMmQ2MmU3NzktZjAxOC00ZDZhLTk4YzEtMDMyMzcxY2IwMDAyXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
+    runtime: "117 min",
+    year: "1979",
+    rated: "R"
 };
 
 //script for youtube player
@@ -20,9 +25,6 @@ var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-var watchHandler = function(event){
-
 
 var suggestionsObjectArray = [];
 var j;
@@ -35,17 +37,21 @@ var getInfo = function() {
     fetch(apiUrl)
         .then(function(response) {
             response.json().then(function(response) {
+                movieObject.runtime = response.Runtime;
                 movieObject.title = response.Title;
                 movieObject.genre = response.Genre;
                 movieObject.plot = response.Plot;
                 movieObject.poster = response.Poster;
+                movieObject.year = response.Year;
+                movieObject.rated = response.Rated;
 
                 showInfo(movieObject);
             })
         })
 }
+
 //API used to gather top results video id and generate an embedded youtube video of movie trailer
-var getTrailer = function(movie){      
+var getTrailer = function(movie) {      
 
     movie = movie.trim().replaceAll(" ", "%20");
 
@@ -74,83 +80,37 @@ var getTrailer = function(movie){
         }
 
     }
-    )};
+)};
 //functionality for embeded youtube player
 function onPlayerReady(event) {
     event.target.playVideo();
-  }
+}
+
 var done = false;
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING && !done) {
       setTimeout(stopVideo, 6000);
       done = true;
     }
-
+}
 
 var showInfo = function(data) {
-    console.log(data);
+    imgContainer.innerHTML = "<img src =" + data.poster + "class = 'movie-link movie-image'>";
+    imgContainer.innerHTML = "<a href =" + data.poster + "id='test' target='_blank' class='movie-link'></br><img src =" + data.poster + " id='movie-image' class='movie-image'></img>"
+    titleContainer.innerHTML = data.title;
+    infoContainer.innerHTML =   "<p>Duration: " + data.runtime + "</p><p>Year: " + data.year + "</p><p>Rating: " + data.rated + "</p><p>Genre: " + data.genre + "</p><p>Plot: " + data.plot + "</p>";
+}
+
+function stopVideo() {
+    player.stopVideo();
 }
 
 var getSuggestions = function() {
     event.preventDefault();
 
-  }
-function stopVideo() {
-    player.stopVideo();
-}
-
-var getInfo = function(movie){
-    movie = movie.trim().replaceAll(" ", "%20")
-    fetch("https://imdb8.p.rapidapi.com/title/auto-complete?q="+movie, {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-key": "625f8dda96msh55e651d2aaeef5bp173131jsnf81938672d82",
-		"x-rapidapi-host": "imdb8.p.rapidapi.com"
-	}
-})
-.then(function(response) {
-    if (response.ok) {
-      response.json().then(function(data) {
-        // Perform another API call using the ID, for more info
-        id = data.d[0].id;
-        title = data.d[0].l;
-        stars = data.d[0].s;
-        year = data.d[0].y;
-        imgUrl = data.d[0].i.imageUrl
-        console.log(data)
-        fetch("https://imdb8.p.rapidapi.com/title/get-plots?tconst="+id, {
-	    "method": "GET",
-	    "headers": {
-		"x-rapidapi-key": "625f8dda96msh55e651d2aaeef5bp173131jsnf81938672d82",
-		"x-rapidapi-host": "imdb8.p.rapidapi.com"
-	}
-})
-    .then(function(response) {
-        response.json().then(function(data) {
-            plot = data.plots[0].text
-            // Perform a final API call for a list of genres
-            fetch("https://imdb8.p.rapidapi.com/title/get-genres?tconst="+id, {
-	    "method": "GET",
-	    "headers": {
-		"x-rapidapi-key": "625f8dda96msh55e651d2aaeef5bp173131jsnf81938672d82",
-		"x-rapidapi-host": "imdb8.p.rapidapi.com"
-	}
-})
-    .then(function(response) {
-        response.json().then(function(data) {
-            genres = String(data)
-            showInfo(title, stars, year, plot, genres, imgUrl)
-        })
-    }
-
-
     var searchGrab = document.querySelector("#search-input").value;
     var apiUrl = "https://api.themoviedb.org/3/search/movie?api_key=b7c4be357f010f43e3a269dfe7a54a8d&query=" + searchGrab;
  
-    // Movies on TMBD can't be searched individually like they can be on OMDB, so this searches for the movie on TMDB and gets an array of every movie containing what was searched 
-    // for. For instance, "Avatar" will return Avatar and Avatar: The Last Airbender. 
-    //
-    // The reason to do this is because TMDB actually has a query to get a list of recommended movies, while OMBD does not.
     fetch(apiUrl)
         .then(function(response) {
             response.json().then(function(response) {
@@ -165,8 +125,6 @@ var displaySuggestions = function(movieArray, searchGrab) {
     suggestionsObjectArray = [];
     var preventDuplicatesArray = [];
         
-    // This for loop searches for the first movie in the array that matches the search. Unfortunately, there are some movies with the same name. There are two Avatar movies, for
-    // instance. Oh well. This returns the id number of what is most likely the most relevant search.
     for(i = 0; i < movieArray.length; i++) {
         if (movieArray[i].title === searchGrab) {
             movieID = movieArray[i].id;
@@ -174,12 +132,8 @@ var displaySuggestions = function(movieArray, searchGrab) {
         }
     }
     
-    // Now we use the recommendations query, which requires a movieID. This, unfortunately, can't be searched by title. 
     var apiUrl = "https://api.themoviedb.org/3/movie/" + movieID + "/recommendations?api_key=b7c4be357f010f43e3a269dfe7a54a8d&language=en-US";
     
-
-    // The recommendation query gives us an array of 20 recommended movies. This section randomly grabs five from the array and pushes them into an object array with the poster image
-    // and title as data fields. 
     fetch(apiUrl)
         .then(function(response) {
             response.json().then(function(response) {
@@ -201,217 +155,14 @@ var displaySuggestions = function(movieArray, searchGrab) {
                     suggestionsObject.poster = "https://image.tmdb.org/t/p/w185" + response.results[j].poster_path;
                     suggestionsObjectArray.push(suggestionsObject);
                 }
-                showInfo(suggestionsObjectArray);
+                // showInfo(suggestionsObjectArray);
             })
         })
 }
 
-//feature/showInfo
-// formEl.addEventListener("submit", () => {
-//     getInfo();
-//     getSuggestions();
-// });
+formEl.addEventListener("submit", () => {
+    getInfo();
+    getSuggestions();
+});
 
-// var getTrailer = function(data){
-// feature/getInfo
-//     data = data.trim()
-// }
-
-// // Create a function to fetch movie data from the IMDB API
-// var getInfo = function(movie){
-//     movie = movie.trim().replaceAll(" ", "%20")
-//     fetch("https://imdb8.p.rapidapi.com/title/auto-complete?q="+movie, {
-// 	"method": "GET",
-// 	"headers": {
-// 		"x-rapidapi-key": "625f8dda96msh55e651d2aaeef5bp173131jsnf81938672d82",
-// 		"x-rapidapi-host": "imdb8.p.rapidapi.com"
-// 	}
-// })
-// .then(function(response) {
-//     if (response.ok) {
-//       response.json().then(function(data) {
-//         // Perform another API call using the ID, for more info
-//         id = data.d[0].id;
-//         title = data.d[0].l;
-//         stars = data.d[0].s;
-//         year = data.d[0].y;
-//         imgUrl = data.d[0].i.imageUrl
-//         console.log(data)
-//         fetch("https://imdb8.p.rapidapi.com/title/get-plots?tconst="+id, {
-// 	    "method": "GET",
-// 	    "headers": {
-// 		"x-rapidapi-key": "625f8dda96msh55e651d2aaeef5bp173131jsnf81938672d82",
-// 		"x-rapidapi-host": "imdb8.p.rapidapi.com"
-// 	}
-// })
-//     .then(function(response) {
-//         response.json().then(function(data) {
-//             plot = data.plots[0].text
-//             // Perform a final API call for a list of genres
-//             fetch("https://imdb8.p.rapidapi.com/title/get-genres?tconst="+id, {
-// 	    "method": "GET",
-// 	    "headers": {
-// 		"x-rapidapi-key": "625f8dda96msh55e651d2aaeef5bp173131jsnf81938672d82",
-// 		"x-rapidapi-host": "imdb8.p.rapidapi.com"
-// 	}
-// })
-//     .then(function(response) {
-//         response.json().then(function(data) {
-//             genres = String(data)
-//             showInfo(title, stars, year, plot, genres, imgUrl)
-//         })
-//     }
-
-//     )
-            
-//         })
-//     }
-
-
-//     )
-        
-//       })
-//     } else {
-//       alert("Error: " + response.statusText);
-//     }
-//   });
-// }
-
-// // Create a function to store variables about the movie
-// var showInfo = function(title, stars, year, plot, genres, imgUrl){
-//     console.log(title, stars, year, plot, genres, imgUrl)
-
-//     console.log(data);
-// >>>>>>> main
-
-
-
-
-
-
-// feature/showInfo
-// 
-//  main
-// }
-//  main
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// formEl.addEventListener("submit", searchHandler);
-
-// watchEl.addEventListener("click", watchHandler);
-
-// var watchHandler = function(event){
-
-// }
-
-// var searchHandler = function(event){
-//     event.preventDefault();
-
-//      var movie = document.querySelector("#search-input").value
-
-//     getInfo(movie);
-//     getTrailer(movie);
-// }
-
-// var getTrailer = function(data){
-//     data = data.trim()
-// }
-
-// // Create a function to fetch movie data from the IMDB API
-// var getInfo = function(movie){
-//     movie = movie.trim().replaceAll(" ", "%20")
-//     fetch("https://imdb8.p.rapidapi.com/title/auto-complete?q="+movie, {
-// 	"method": "GET",
-// 	"headers": {
-// 		"x-rapidapi-key": "625f8dda96msh55e651d2aaeef5bp173131jsnf81938672d82",
-// 		"x-rapidapi-host": "imdb8.p.rapidapi.com"
-// 	}
-// })
-// .then(function(response) {
-//     if (response.ok) {
-//       response.json().then(function(data) {
-//         // Perform another API call using the ID, for more info
-//         id = data.d[0].id;
-//         title = data.d[0].l;
-//         stars = data.d[0].s;
-//         year = data.d[0].y;
-//         imgUrl = data.d[0].i.imageUrl
-//         console.log(data)
-//         fetch("https://imdb8.p.rapidapi.com/title/get-plots?tconst="+id, {
-// 	    "method": "GET",
-// 	    "headers": {
-// 		"x-rapidapi-key": "625f8dda96msh55e651d2aaeef5bp173131jsnf81938672d82",
-// 		"x-rapidapi-host": "imdb8.p.rapidapi.com"
-// 	}
-// })
-//     .then(function(response) {
-//         response.json().then(function(data) {
-//             plot = data.plots[0].text
-//             // Perform a final API call for a list of genres
-//             fetch("https://imdb8.p.rapidapi.com/title/get-genres?tconst="+id, {
-// 	    "method": "GET",
-// 	    "headers": {
-// 		"x-rapidapi-key": "625f8dda96msh55e651d2aaeef5bp173131jsnf81938672d82",
-// 		"x-rapidapi-host": "imdb8.p.rapidapi.com"
-// 	}
-// })
-//     .then(function(response) {
-//         response.json().then(function(data) {
-//             genres = String(data)
-//             showInfo(title, stars, year, plot, genres, imgUrl)
-//         })
-//     }
-
-//     )
-            
-//         })
-//     }
-
-//     )
-        
-//       })
-//     } else {
-//       alert("Error: " + response.statusText);
-//     }
-//   });
-// }
-
-// // Create a function to store variables about the movie
-// var showInfo = function(title, stars, year, plot, genres, imgUrl){
-//     console.log(title, stars, year, plot, genres, imgUrl)
-
- 
-}
-
-
-//     console.log(data);
-
-// }
-
+showInfo(movieObject);
