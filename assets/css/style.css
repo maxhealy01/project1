@@ -3,6 +3,8 @@
 :root {
 --primary-color:rgb(170, 231, 218);
 --secondary-color:rgb(103, 141, 133);
+--watch-list-color:rgb(174, 173, 179);
+--watch-list-hover-color:rgb(107, 107, 109);
 
 --logo-font: 'Bebas Neue', cursive;
 --content-font:'Poppins', sans-serif;
@@ -35,7 +37,7 @@ body {
     padding-bottom: 2rem;
 }
 
-/* NAVIGATION BAR FOR MOBILE */
+/* navigation bar for mobile */
 @media screen and (min-width: 1024px){
     .navbar-title {
         padding-top: 1.2rem;
@@ -80,7 +82,40 @@ body {
     outline: none;
 }
 
+/* MAIN CONTAINER */
+.movie-section {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+}
+
+/* navigation bar for mobile viewport */
+@media screen and (min-width: 1024px){
+    .movie-section {
+        flex-direction: row;
+    }
+}
+
+/* WATCH LIST SECTION */
+.watch-list-section {
+    background-color: rgba(71, 69, 69, 0.5);
+    min-width:20vw;
+    padding: 20px;
+}
+
+.watch-list li {
+    border-radius: 3px;
+    background-color: var(--watch-list-color);
+}
+
+.watch-list li:hover {
+    background-color: var(--watch-list-hover-color);
+    cursor: pointer;
+}
+
+
 /* MOVIE INFO SECTION */
+/* movie image */
 .movie-image {
     max-width: 20rem;
     border-radius: 5px;
@@ -88,7 +123,7 @@ body {
     transform: scale(1);
     filter: brightness(100%);
     border: none .3rem rgba(255,255,255,0);
-    transition: all .25s ease;
+    transition: all .5s ease;
     transition-property: transform, box-shadow, filter, border;
 }
 
@@ -98,13 +133,10 @@ body {
     box-shadow: 3px 3px 6px 2px rgba(0,0,0,.7);
     filter: brightness(105%);
     border: solid .3rem rgba(255,255,255, .7);
-
-    transition: all .25s ease;
-    transition-property: transform, box-shadow, filter, border;
 }
 
-/* Button styles: watch later */
-.watch-later-button, .watch-trailer-button {
+/* button styles: watch trailer and watch list */
+.watch-trailer-button, .watch-list-button {
     border: none;
     width: 100%;
     height:50px;
@@ -115,22 +147,29 @@ body {
     font-size: 20px;
     color: rgb(61, 61, 61);
     border-radius: 5px;
+    transition: all .5s ease;
 }
 
-.watch-later-button:hover, .watch-trailer-button:hover {
+.watch-trailer-button:hover, .watch-list-button:hover {
     color: white;
     background-color: var(--secondary-color);
     cursor: pointer;
 }
 
-.watch-later-text, .watch-trailer-text {
+.watch-trailer-text, .watch-list-text {
     font-family: 'Bebas Neue', cursive;
 }
 
-.info-text {
-    line-height: 2.1rem;
+/* movie details */
+.movie-info-section {
+    line-height: 2rem;
 }
 
+.movie-detail {
+    font-weight: bold;
+}
+
+/* TRAILER */
 /* Play trailer in full screen */
 iframe {
     position: fixed;

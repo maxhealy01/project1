@@ -9,9 +9,8 @@
     <!-- Bulma style sheet -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
 
-    <!-- style sheet -->
+    <!-- custom style sheet -->
     <link rel="stylesheet" href="./assets/css/style.css" />
-
 
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
@@ -23,7 +22,7 @@
 
 <body>
     <!-- NAVBAR -->
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <nav id="navbar" class="navbar" role="navigation" aria-label="main navigation">
         <!-- title/logo section -->
         <div id="page-title" class="navbar-brand-desktop is-centered">
             <h1 class="navbar-item mx-4 px-6 navbar-title">Movie Search?</h1>
@@ -31,10 +30,11 @@
 
         <!-- navbar search form -->
         <div id="form-container" class="navbar-end">
-            <form id="form-container" class="navbar-item navbar-form mx-4 px-6">
-
-                <!-- input -->
-                <input name="movie-input" id="search-input" type="text" placeholder="Search for a movie" autofocus="true" class="search-input" />
+            <form id="search-form" class="navbar-item navbar-form mx-4 px-6">
+              
+                <!-- search input -->
+                <input id="search-input" class="search-input" name="movie-input" type="text" placeholder="Search for a movie" aut
+                ofocus="true" />
 
                 <!-- submit button -->
                 <button id="search-button" class="search-button" type="submit" >
@@ -46,47 +46,71 @@
 
     <!-- MOVIE INFO SECTION -->
     <main class="section movie-section" style="min-height: 100vh">
-        <div class="container mx-2">
+
+        <!-- SIDE BAR: watch list -->
+        <aside class="watch-list-section">
+            <h3 id="watch-list-title" class="title is-4 mt-5 mb-1 has-text-light">Watch List</h3>
+            <ul id="watch-list" class="watch-list has-text-dark py-3">
+                <!-- watch list items (note: in order to maintain styles for each item, use the span id as an element selector)-->
+                <li class="p-3 my-3"><span id="watch-list-item">Movie 1</span></li>
+                <li class="p-3 my-3"><span id="watch-list-item">Movie 2</span></li>
+                <li class="p-3 my-3"><span id="watch-list-item">Movie 3</span></li>
+            </ul>
+        </aside>
+
+        <!-- css-specific div containers -->
+        <div class="container mx-2 mr-6 my-3">
             <div class="columns is-centered">
 
                 <!-- COLUMN 1: movie poster section -->
-                <div class="column movie-image-section has-text-right-tablet has-text-centered" id="img-container">
+                <div class="column movie-image-section has-text-centered mt-5 is-4">
                     <!-- poster image -->
+                    <a id="movie-image-link" class="movie-image-link" href="./assets/images/star-wars-image.jpeg" target="_blank">
+                        <img id="movie-image" class="movie-image" src="./assets/images/star-wars-image.jpeg">
+                    </a>
                 </div>
 
                 <!-- COLUMN 2: movie summary section -->
-                <div id="info-text" class="column has-text-light info-text">
+                <div id="movie-info-section" class="column has-text-light movie-info-section is-8 mt-5">
                         <!-- movie title -->
-                        <h2 class="is-title is-size-3 my-5" id="title-container">
-                            Star Wars: The Rise of the Skywalker
+                  
+                        <h2 id="movie-title" class="is-title is-size-3 my-5">
+                            Title: Star Wars: The Rise of Skywalker
+
                         </h2>
                         <div class="buttons">
                             <!-- watch trailer button/link -->
-                            <a class="watch-trailer-button" id="watch-trailer-button" href="trailer.html" target="_blank">
+                            <a id="watch-trailer-button" class="watch-trailer-button" href="trailer.html" target="_blank">
                                 <i class="fas fa-play play-icon"></i>
                                 <span class="watch-trailer-text">Watch Trailer</span>
                             </a>
-                            <!-- watch later button -->
-                            <button class="watch-later-button" id="watch-later-button">
+                            <!-- watch list button -->
+                            <button id="watch-list-button" class="watch-list-button">
                                 <i class="fas fa-plus-circle add-icon"> </i>
-                                <span class="watch-later-text">Add to Watch List</span>
+                                <span class="watch-list-text">Add to Watch List</span>
                             </button>
+                        </div>
+
+                      <!-- movie details (NOTE: if possible, use span tag ids for element selectors) -->
+                      <div id="info-container">
+                        <p>
+                            <span class="movie-detail">Duration:</span><span id="duration"> 2h 22m</span>
+                        </p>
+                        <p>
+                            <span class="movie-detail">Year:</span><span id="year"> 2019</span>
+                        </p>
+                        <p>
+                            <span class="movie-detail">Rating:</span><span id="rating"> PG-13</span>
+                        </p>
+                        <p>
+                            <span class="movie-detail">Genre:</span><span id="duration"> Action-Adventure, Science Fiction</span>
+                        </p>
+                        <p id="synopsis" class="movie-synopsis mt-3"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. At libero fugiat ab quae voluptatum cumque obcaecati qui repellendus placeat architecto saepe nisi, harum eum cum totam odio ad labore pariatur?</p>
+                      </div>
+                  
                 </div>
-                    <div id = "info-container">
-                        <!-- movie information container -->
-                    </div>
-                </div>
-
-                <!-- movie trailer section -->
-
-
             </div>
-
-        <div id="player"><!-- trailer container -->
-                                    
-
         </div>
-
     </main>
 
     <script src="https://apis.google.com/js/api.js"></script>
