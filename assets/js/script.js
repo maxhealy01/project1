@@ -10,6 +10,7 @@ var imgContainer = document.querySelector("#img-container");
 var titleContainer = document.querySelector("#movie-title");
 var infoContainer = document.querySelector("#info-container");
 var trailerStartEl = document.querySelector("#button-container");
+var mainEl = document.querySelector("mainId");
 
 var movieObject = {
     title:"Alien",
@@ -31,8 +32,9 @@ var suggestionsObjectArray = [];
 var j;
 
 var getInfo = function() {
+    
     var searchGrab = document.querySelector("#search-input").value;
-    var apiUrl = "http://omdbapi.com/?t=" + searchGrab + "&apikey=4b6a7602";
+    var apiUrl = "http://omdbapi.com/?t=" + searchGrab + "&apikey=344449ee";
 
     // Fetch from OMDB and store information inside our movie object
     fetch(apiUrl)
@@ -52,16 +54,16 @@ var getInfo = function() {
 }
 
 //API used to gather top results video id and generate an embedded youtube video of movie trailer
-var getTrailer = function(movie) {      
-
+var getTrailer = function(movie) {    
     movie = movie.title.trim().replaceAll(" ", "%20");
 
-    var apiUrl = "https://youtube.googleapis.com/youtube/v3/search?q=" + movie + "%20movie%20trailer&key=AIzaSyAJt6A_-FzpJ3d5W9ARN1XMMQR_hqWNDVE"
-
+    var apiUrl = "https://youtube.googleapis.com/youtube/v3/search?q=" + movie + "%20movie%20trailer&key=AIzaSyAZf7c7gwdAy1KKOaeuRYt6Ag5KYf-Ikfc"
+  
     fetch(apiUrl)
     .then(function(response){
         if (response.ok) {
             response.json().then(function(data) {
+                console.log(data);
                 var player;
             player = new YT.Player('player', {
                  height: '390',
@@ -72,7 +74,6 @@ var getTrailer = function(movie) {
                    'onStateChange': onPlayerStateChange
                  }
             });   
-
             });
                     
         }
@@ -161,14 +162,27 @@ var displaySuggestions = function(movieArray, searchGrab) {
             })
         })
 }
+var eventHandler = function(event){
+    if(event.target.id == "watch-trailer-button"){
+        getTrailer(movieObject);
+    }
+}
+trailerStartEl.addEventListener("click", eventHandler);
 
-formEl.addEventListener("submit", () => {
+formEl.addEventListener("submit", () => {  
+    event.preventDefault();
+    
+    var video = document.querySelector("iframe");
+    
+    if(video!=null){
+    video.parentNode.removeChild(video);}
+    
     getInfo();
     getSuggestions();
 });
 
-trailerStartEl.addEventListener("click", () => {
-    getTrailer(movieObject);   
-});
+// trailerStartEl.addEventListener("click", () => {
+//     getTrailer(movieObject);   
+// });
 
 showInfo(movieObject);

@@ -45,7 +45,7 @@
     </nav>
 
     <!-- MOVIE INFO SECTION -->
-    <main class="section movie-section" style="min-height: 100vh">
+    <main id="mainId" class="section movie-section" style="min-height: 100vh">
 
         <!-- SIDE BAR: watch list -->
         <aside class="watch-list-section">
@@ -76,12 +76,12 @@
                         </h2>
                         <div id="button-container" class="buttons">
                             <!-- watch trailer button/link -->
-                            <button id="watch-trailer-button" class="watch-trailer-button" href="trailer.html" target="_blank" type = "button">
+                            <button id="watch-trailer-button" type="button" class="watch-trailer-button">
                                 <i class="fas fa-play play-icon"></i>
-                                <span class="watch-trailer-text">Watch Trailer</span>
-                            </a>
+                                <span id="watch-trailer-button" class="watch-trailer-text">Watch Trailer</span>
+                            </button>
                             <!-- watch list button -->
-                            <button id="watch-list-button" class="watch-list-button">
+                            <button id="watch-list-button" type="button" class="watch-list-button">
                                 <i class="fas fa-plus-circle add-icon"> </i>
                                 <span class="watch-list-text">Add to Watch List</span>
                             </button>
@@ -91,7 +91,8 @@
                       <div id="info-container">
                         
                       </div>
-                  
+                      <div id="player"></div>
+                
                 </div>
             </div>
         </div>
