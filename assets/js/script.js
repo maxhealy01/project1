@@ -167,8 +167,8 @@ formEl.addEventListener("submit", () => {
     getSuggestions();
 });
 
-// trailerStartEl.addEventListener("click", () => {
-//     getTrailer(movieObject);
-// });
+trailerStartEl.addEventListener("click", () => {
+    getTrailer(movieObject);   
+});
 
 showInfo(movieObject);
