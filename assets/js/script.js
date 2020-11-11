@@ -107,7 +107,7 @@ function stopVideo() {
     player.stopVideo();
 }
 
-var getSuggestions = function() {
+var getSuggestions = function(event) {
     event.preventDefault();
 
     var searchGrab = document.querySelector("#search-input").value;
@@ -120,7 +120,9 @@ var getSuggestions = function() {
                 displaySuggestions(movieArray, searchGrab);
         })
     })
+ 
 }
+
 
 var displaySuggestions = function(movieArray, searchGrab) {
     var movieID = "";
@@ -138,7 +140,13 @@ var displaySuggestions = function(movieArray, searchGrab) {
     
     fetch(apiUrl)
         .then(function(response) {
-            response.json().then(function(response) {
+            if(!response.ok){
+                throw new Error(response.statusText);
+                
+            }
+            return response.json()
+            .then(function(response) {
+                
                 for (i = 0; i < 5; i++) {
                     j = Math.floor(Math.random() * 20);
 
@@ -160,6 +168,9 @@ var displaySuggestions = function(movieArray, searchGrab) {
                 // showInfo(suggestionsObjectArray);
             })
         })
+        .catch((error)=>{
+            alert("Error", error);
+        });
 }
 
 formEl.addEventListener("submit", () => {
