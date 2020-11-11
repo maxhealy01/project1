@@ -12,13 +12,13 @@ var infoContainer = document.querySelector("#info-container");
 var trailerStartEl = document.querySelector("#button-container");
 
 var movieObject = {
-    title:"Alien",
-    genre: "Horror, Sci-Fi",
-    plot: "After a space merchant vessel receives an unknown transmission as a distress call, one of the crew is attacked by a mysterious life form and they soon realize that its life cycle has merely begun.",
-    poster: "https://m.media-amazon.com/images/M/MV5BMmQ2MmU3NzktZjAxOC00ZDZhLTk4YzEtMDMyMzcxY2IwMDAyXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
-    runtime: "117 min",
-    year: "1979",
-    rated: "R"
+    title,
+    genre, 
+    plot, 
+    poster, 
+    runtime, 
+    year,
+    rated, 
 };
 
 //script for youtube player
@@ -26,7 +26,12 @@ var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
+const checkStatusAndParse = response =>{
+    if(!response.ok)
+    throw new Error (`Status code Error ${response.statusText}`)
+  
+    return response.json();
+};
 var suggestionsObjectArray = [];
 var j;
 
@@ -36,23 +41,19 @@ var getInfo = function() {
 
     // Fetch from OMDB and store information inside our movie object
     fetch(apiUrl)
-        .then(function(response) {
-            response.json().then(function(response) {
-                movieObject.runtime = response.Runtime;
-                movieObject.title = response.Title;
-                movieObject.genre = response.Genre;
-                movieObject.plot = response.Plot;
-                movieObject.poster = response.Poster;
-                movieObject.year = response.Year;
-                movieObject.rated = response.Rated;
+        .then(checkStatusAndParse)
+        .then(results=> {
+            movieObject={}
+               for(i of results){
+                movieObject.push.results[i]
+        } return movieObject
+   })
 
-                showInfo(movieObject);
-            })
-        })
-}
+        .catch(error=>error.statusText);
 
+        }
 //API used to gather top results video id and generate an embedded youtube video of movie trailer
-var getTrailer = function(movie) {      
+let  getTrailer = function(movie) {      
 
     movie = movie.title.trim().replaceAll(" ", "%20");
 
@@ -61,7 +62,11 @@ var getTrailer = function(movie) {
     fetch(apiUrl)
     .then(function(response){
         if (response.ok) {
-            response.json().then(function(data) {
+            throw new Error(response.statusText);
+        }
+        return response.json()
+    }
+        .then(function(data) {
                 var player;
             player = new YT.Player('player', {
                  height: '390',
@@ -73,15 +78,15 @@ var getTrailer = function(movie) {
                  }
             });   
 
-            });
+            })
                     
-        }
-        else {
-        alert("Error: " + response.statusText);
-        }
+    )}
+    .catch(error=>{
+        return console.log(error.statusText);
+    }) 
 
-    }
-)};
+    
+
 //functionality for embeded youtube player
 function onPlayerReady(event) {
     event.target.playVideo();
@@ -141,13 +146,10 @@ var displaySuggestions = function(movieArray, searchGrab) {
     fetch(apiUrl)
         .then(function(response) {
             if(!response.ok){
-                throw new Error(response.statusText);
-                
-            }
-            return response.json()
-            .then(function(response) {
-                
-                for (i = 0; i < 5; i++) {
+                throw new Error(`Status code error: ${response.statusText}`);
+                 }returnresponse.json()
+                 .then(data=>{
+               for (i = 0; i < 5; i++) {
                     j = Math.floor(Math.random() * 20);
 
                     while(preventDuplicatesArray.includes(j)) {
@@ -164,10 +166,9 @@ var displaySuggestions = function(movieArray, searchGrab) {
                     suggestionsObject.title = response.results[j].title;
                     suggestionsObject.poster = "https://image.tmdb.org/t/p/w185" + response.results[j].poster_path;
                     suggestionsObjectArray.push(suggestionsObject);
-                }
+                });
                 // showInfo(suggestionsObjectArray);
-            })
-        })
+        
         .catch((error)=>{
             alert("Error", error);
         });
