@@ -7,7 +7,7 @@ var searchBtnEl = document.querySelector("#search-button");
 var formEl = document.querySelector("#form-container");
 var watchEl = document.querySelector("#watch-later-btn");
 var imgContainer = document.querySelector("#img-container");
-var titleContainer = document.querySelector("#title-container");
+var titleContainer = document.querySelector("#movie-title");
 var infoContainer = document.querySelector("#info-container");
 var trailerStartEl = document.querySelector("#button-container");
 
@@ -96,10 +96,11 @@ function onPlayerStateChange(event) {
 }
 
 var showInfo = function(data) {
-    imgContainer.innerHTML = "<img src =" + data.poster + "class = 'movie-link movie-image'>";
-    imgContainer.innerHTML = "<a href =" + data.poster + "id='test' target='_blank' class='movie-link'></br><img src =" + data.poster + "id='movie-image' class='movie-image'></img>"
+    imgContainer.innerHTML = "<a href =" + data.poster + "id='movie-image-link' target='_blank' class='movie-image-link'></br><img src =" + data.poster + "id='movie-image' class='movie-image'></img>"
     titleContainer.innerHTML = data.title;
-    infoContainer.innerHTML =   "<p>Duration: " + data.runtime + "</p><p>Year: " + data.year + "</p><p>Rating: " + data.rated + "</p><p>Genre: " + data.genre + "</p><p>Plot: " + data.plot + "</p>";
+    infoContainer.innerHTML = "<p><span class='movie-detail'>Duration:</span><span id='duration'> " + data.runtime + "</span></p><p><span class='movie-detail'>Year:</span><span id='year'> " + data.year + "</span></p>" +
+                        "<p><span class='movie-detail'>Rating:</span><span id='rating'> " + data.rated + "</span></p><p>" + 
+                            "<span class='movie-detail'>Genre:</span><span id='duration'> " + data.genre + "</span></p><p id='synopsis' class='movie-synopsis mt-3'> " + data.plot + "</p>";
 }
 
 function stopVideo() {
