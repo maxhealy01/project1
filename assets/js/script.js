@@ -171,8 +171,11 @@ trailerStartEl.addEventListener("click", eventHandler);
 
 formEl.addEventListener("submit", () => {  
     event.preventDefault();
+    
     var video = document.querySelector("iframe");
-    video.parentNode.removeChild(video);
+    
+    if(video!=null){
+    video.parentNode.removeChild(video);}
     
     getInfo();
     getSuggestions();
