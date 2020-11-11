@@ -5,11 +5,12 @@ var infoEl = document.querySelector("#info-container");
 var trailerEl = document.querySelector("#trailer-container");
 var searchBtnEl = document.querySelector("#search-button");
 var formEl = document.querySelector("#form-container");
-var watchEl = document.querySelector("#watch-later-btn");
+var watchEl = document.querySelector("#watch-list-button");
 var imgContainer = document.querySelector("#img-container");
 var titleContainer = document.querySelector("#movie-title");
 var infoContainer = document.querySelector("#info-container");
 var trailerStartEl = document.querySelector("#button-container");
+
 
 var movieObject = {
     title:"Alien",
@@ -46,7 +47,12 @@ var getInfo = function() {
                 movieObject.year = response.Year;
                 movieObject.rated = response.Rated;
 
+                
                 showInfo(movieObject);
+                getDataStore(response)
+                     
+    
+
             })
         })
 }
@@ -100,14 +106,16 @@ var showInfo = function(data) {
     titleContainer.innerHTML = data.title;
     infoContainer.innerHTML = "<p><span class='movie-detail'>Duration:</span><span id='duration'> " + data.runtime + "</span></p><p><span class='movie-detail'>Year:</span><span id='year'> " + data.year + "</span></p>" +
                         "<p><span class='movie-detail'>Rating:</span><span id='rating'> " + data.rated + "</span></p><p>" + 
-                            "<span class='movie-detail'>Genre:</span><span id='duration'> " + data.genre + "</span></p><p id='synopsis' class='movie-synopsis mt-3'> " + data.plot + "</p>";
+                            "<span class='movie-detail'>Genre:</span><span id='duration'> " + data.genre + "</span></p><p id='synopsis' class='movie-synopsis mt-3'> " + data.plot + "</p>"
+
+
 }
 
 function stopVideo() {
     player.stopVideo();
 }
 
-var getSuggestions = function() {
+var getSuggestions = function(event) {
     event.preventDefault();
 
     var searchGrab = document.querySelector("#search-input").value;
@@ -162,13 +170,45 @@ var displaySuggestions = function(movieArray, searchGrab) {
         })
 }
 
+function getDataStore(response){
+    var searchGrab=document.querySelector('#search-input').value;
+    if(localStorage.getItem('movieObject')==null){
+
+    
+    localStorage.setItem('movieObject',response);
+    console.log(localStorage);
+    }
+    let old_data=JSON.parse(localStorage.getItem('movieObject'));
+    old_data.push(searchGrab);
+    localStorage.setItem('movieObject',JSON.stringify(old_data));
+    console.log(movieObject)
+    
+   
+
+    }
+function displayWatchList(response){
+
+    var watchList=document.querySelector('#watch-list');
+    
+    var watchListItem1=document.createElement("li");
+        watchListItem1.className="p-3 my-3";
+
+    var htmlhandler=`<li class="p-3 my-3"><span id="watch-list-item"><img onclick="movieSearch();" src=" ${movieObject.poster} "id='movie-image' ></img><p><strong>Title :</strong> ${movieObject.title}</br><strong>Run Time :</strong> ${movieObject.runtime}</p></span></li>`
+       
+    watchListItem1.innerHTML=htmlhandler
+    localStorage.setItem('movieWatchList',htmlhandler)
+    watchList.appendChild(watchListItem1);
+    
+    
+   console.log(movieObject)
+
+    
+}
+
+
 formEl.addEventListener("submit", () => {
     getInfo();
-    getSuggestions();
+    getSuggestions(event);
 });
-
-// trailerStartEl.addEventListener("click", () => {
-//     getTrailer(movieObject);
-// });
 
 showInfo(movieObject);
