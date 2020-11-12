@@ -10,6 +10,7 @@ var imgContainer = document.querySelector("#img-container");
 var titleContainer = document.querySelector("#movie-title");
 var infoContainer = document.querySelector("#info-container");
 var trailerStartEl = document.querySelector("#button-container");
+let watchBtn=document.getElementById('watch-btn');
 
 
 var movieObject = {
@@ -191,19 +192,68 @@ function displayWatchList(response){
     var watchList=document.querySelector('#watch-list');
     
     var watchListItem1=document.createElement("li");
+        
         watchListItem1.className="p-3 my-3";
+    
+    var htmlhandler=`<li class="p-3 my-3"><span id="watch-list-item"><img  src=" ${movieObject.poster} "id='movie-image' ></img><p><strong>Title :</strong> <span id="title">${movieObject.title}</span></br><strong>Run Time :</strong> ${movieObject.runtime}</p><button id="delete-btn" class="delete-btn btn" type="submit" onclick="deleteWatchLIstItem();">Delete</button> <button id="watch-btn" class="watch-btn btn" type="submit" onclick="displayMovieSug();">Watch</button> </span></li>`
 
-    var htmlhandler=`<li class="p-3 my-3"><span id="watch-list-item"><img onclick="movieSearch();" src=" ${movieObject.poster} "id='movie-image' ></img><p><strong>Title :</strong> ${movieObject.title}</br><strong>Run Time :</strong> ${movieObject.runtime}</p></span></li>`
-       
-    watchListItem1.innerHTML=htmlhandler
-    localStorage.setItem('movieWatchList',htmlhandler)
     watchList.appendChild(watchListItem1);
+    watchListItem1.innerHTML=htmlhandler
+    getDataStore(response)
+    
+ 
+    
     
     
    console.log(movieObject)
 
     
 }
+
+
+function displayMovieSug(data){
+    
+   
+        var title=document.getElementById('title').value;
+       
+        var apiUrl = 'http://omdbapi.com/?t='+ title +'&apikey=4b6a7602';
+    
+        // Fetch from OMDB and store information inside our movie object
+        fetch(apiUrl)
+            .then(function(response) {
+                response.json().then(function(response) {
+                    movieObject.runtime = response.Runtime;
+                    movieObject.title = response.Title;
+                    movieObject.genre = response.Genre;
+                    movieObject.plot = response.Plot;
+                    movieObject.poster = response.Poster;
+                    movieObject.year = response.Year;
+                    movieObject.rated = response.Rated;
+    
+                    
+                    showInfo(movieObject);
+                    console.log(movieObject)
+                         
+        
+    
+                })
+            })
+    
+
+}
+
+
+
+var  deleteWatchLIstItem =function(){
+    var watchList=document.querySelector('#watch-list');
+var watchListItem1 =document.getElementsByClassName('p-3 my-3')
+watchList.removeChild(watchListItem1)
+
+}
+
+
+
+
 
 
 formEl.addEventListener("submit", () => {
