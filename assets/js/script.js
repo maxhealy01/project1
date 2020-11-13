@@ -5,17 +5,12 @@ var infoEl = document.querySelector("#info-container");
 var trailerEl = document.querySelector("#trailer-container");
 var searchBtnEl = document.querySelector("#search-button");
 var formEl = document.querySelector("#form-container");
-var watchEl = document.querySelector("#watch-list-button");
+var watchEl = document.querySelector("#watch-later-btn");
 var imgContainer = document.querySelector("#img-container");
 var titleContainer = document.querySelector("#movie-title");
 var infoContainer = document.querySelector("#info-container");
 var trailerStartEl = document.querySelector("#button-container");
-
-let watchBtn=document.getElementById('watch-btn');
-
-
 var mainEl = document.querySelector("mainId");
-
 
 var movieObject = {
     title:"Alien",
@@ -53,12 +48,7 @@ var getInfo = function() {
                 movieObject.year = response.Year;
                 movieObject.rated = response.Rated;
 
-                
                 showInfo(movieObject);
-                getDataStore(response)
-                     
-    
-
             })
         })
 }
@@ -111,16 +101,14 @@ var showInfo = function(data) {
     titleContainer.innerHTML = data.title;
     infoContainer.innerHTML = "<p><span class='movie-detail'>Duration:</span><span id='duration'> " + data.runtime + "</span></p><p><span class='movie-detail'>Year:</span><span id='year'> " + data.year + "</span></p>" +
                         "<p><span class='movie-detail'>Rating:</span><span id='rating'> " + data.rated + "</span></p><p>" + 
-                            "<span class='movie-detail'>Genre:</span><span id='duration'> " + data.genre + "</span></p><p id='synopsis' class='movie-synopsis mt-3'> " + data.plot + "</p>"
-
-
+                            "<span class='movie-detail'>Genre:</span><span id='duration'> " + data.genre + "</span></p><p id='synopsis' class='movie-synopsis mt-3'> " + data.plot + "</p>";
 }
 
 function stopVideo() {
     player.stopVideo();
 }
 
-var getSuggestions = function(event) {
+var getSuggestions = function() {
     event.preventDefault();
 
     var searchGrab = document.querySelector("#search-input").value;
@@ -181,94 +169,6 @@ var eventHandler = function(event){
 }
 trailerStartEl.addEventListener("click", eventHandler);
 
-
-function getDataStore(response){
-    var searchGrab=document.querySelector('#search-input').value;
-    if(localStorage.getItem('movieObject')==null){
-
-    
-    localStorage.setItem('movieObject',response);
-    console.log(localStorage);
-    }
-    let old_data=JSON.parse(localStorage.getItem('movieObject'));
-    old_data.push(searchGrab);
-    localStorage.setItem('movieObject',JSON.stringify(old_data));
-    console.log(movieObject)
-    
-   
-
-    }
-function displayWatchList(response){
-
-    var watchList=document.querySelector('#watch-list');
-    
-    var watchListItem1=document.createElement("li");
-        
-        watchListItem1.className="p-3 my-3";
-    
-    var htmlhandler=`<li class="p-3 my-3"><span id="watch-list-item"><img  src=" ${movieObject.poster} "id='movie-image' ></img><p><strong>Title :</strong> <span id="title">${movieObject.title}</span></br><strong>Run Time :</strong> ${movieObject.runtime}</p><button id="delete-btn" class="delete-btn btn" type="submit" onclick="deleteWatchLIstItem();">Delete</button> <button id="watch-btn" class="watch-btn btn" type="submit" onclick="displayMovieSug();">Watch</button> </span></li>`
-
-    watchList.appendChild(watchListItem1);
-    watchListItem1.innerHTML=htmlhandler
-    getDataStore(response)
-    
- 
-    
-    
-    
-   console.log(movieObject)
-
-    
-}
-
-
-function displayMovieSug(data){
-    
-   
-        var title=document.getElementById('title').value;
-       
-        var apiUrl = 'http://omdbapi.com/?t='+ title +'&apikey=4b6a7602';
-    
-        // Fetch from OMDB and store information inside our movie object
-        fetch(apiUrl)
-            .then(function(response) {
-                response.json().then(function(response) {
-                    movieObject.runtime = response.Runtime;
-                    movieObject.title = response.Title;
-                    movieObject.genre = response.Genre;
-                    movieObject.plot = response.Plot;
-                    movieObject.poster = response.Poster;
-                    movieObject.year = response.Year;
-                    movieObject.rated = response.Rated;
-    
-                    
-                    showInfo(movieObject);
-                    console.log(movieObject)
-                         
-        
-    
-                })
-            })
-    
-
-}
-
-
-
-var  deleteWatchLIstItem =function(){
-    var watchList=document.querySelector('#watch-list');
-var watchListItem1 =document.getElementsByClassName('p-3 my-3')
-watchList.removeChild(watchListItem1)
-
-}
-
-
-
-
-
-
-formEl.addEventListener("submit", () => {
-
 formEl.addEventListener("submit", () => {  
     event.preventDefault();
     
@@ -277,9 +177,12 @@ formEl.addEventListener("submit", () => {
     if(video!=null){
     video.parentNode.removeChild(video);}
     
-
     getInfo();
-    getSuggestions(event);
+    getSuggestions();
 });
+
+// trailerStartEl.addEventListener("click", () => {
+//     getTrailer(movieObject);
+// });
 
 showInfo(movieObject);
