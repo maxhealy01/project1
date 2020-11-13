@@ -191,14 +191,17 @@ function displayWatchList(response){
 
     var watchList=document.querySelector('#watch-list');
     
-    var watchListItem1=document.createElement("li");
+    var watchListItem1=document.createElement('li');
         
-        watchListItem1.className="p-3 my-3";
+        watchListItem1.className="liElement";
     
-    var htmlhandler=`<li class="p-3 my-3"><span id="watch-list-item"><img  src=" ${movieObject.poster} "id='movie-image' ></img><p><strong>Title :</strong> <span id="title">${movieObject.title}</span></br><strong>Run Time :</strong> ${movieObject.runtime}</p><button id="delete-btn" class="delete-btn btn" type="submit" onclick="deleteWatchLIstItem();">Delete</button> <button id="watch-btn" class="watch-btn btn" type="submit" onclick="displayMovieSug();">Watch</button> </span></li>`
+    var htmlhandler=`<li class="p-3 my-3"><span id="watch-list-item"><img  src=" ${movieObject.poster} "id='movie-image' ></img><p><strong>Title :</strong> <span id="title">${movieObject.title}</span></br><strong>Run Time :</strong> ${movieObject.runtime}</p><button id="delete-btn" class="delete-btn btn" type="submit"  onclick="deleteWatchLIstItem();">Delete</button> <button id="watch-btn" class="watch-btn btn" type="submit" onclick="displayMovieSug();">Watch</button> </span></li>`
+    
+    
+    watchListItem1.innerHTML=htmlhandler
 
     watchList.appendChild(watchListItem1);
-    watchListItem1.innerHTML=htmlhandler
+
     getDataStore(response)
     
  
@@ -243,13 +246,27 @@ function displayMovieSug(data){
 }
 
 
-
-var  deleteWatchLIstItem =function(){
+function deleteWatchLIstItem(watchList){
+    
+    
+    var watchListItem1 =document.getElementsByClassName('liElement')
     var watchList=document.querySelector('#watch-list');
-var watchListItem1 =document.getElementsByClassName('p-3 my-3')
-watchList.removeChild(watchListItem1)
+    const button=document.getElementById('#delete-btn');
+    
+        watchList.parentNode.removeChild(watchListItem1)
+    
+    
+    
+        watchList.removeChild(watchListItem1);
+        
 
-}
+    }
+
+ /*   
+
+watchList.removeChild(watchListItem1)
+*/
+
 
 
 
