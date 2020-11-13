@@ -51,7 +51,10 @@
         <aside class="watch-list-section">
             <h3 id="watch-list-title" class="title is-4 mt-5 mb-1 has-text-light">Watch List</h3>
             <ul id="watch-list" class="watch-list has-text-dark py-3">
-
+                <!-- watch list items (note: in order to maintain styles for each item, use the span id as an element selector)-->
+                <li class="p-3 my-3"><span id="watch-list-item">Movie 1</span></li>
+                <li class="p-3 my-3"><span id="watch-list-item">Movie 2</span></li>
+                <li class="p-3 my-3"><span id="watch-list-item">Movie 3</span></li>
             </ul>
         </aside>
 
@@ -78,11 +81,7 @@
                                 <span id="watch-trailer-button" class="watch-trailer-text">Watch Trailer</span>
                             </button>
                             <!-- watch list button -->
-
-                            <button id="watch-list-button" class="watch-list-button" onclick="displayWatchList();">
-
                             <button id="watch-list-button" type="button" class="watch-list-button">
-
                                 <i class="fas fa-plus-circle add-icon"> </i>
                                 <span class="watch-list-text">Add to Watch List</span>
                             </button>
