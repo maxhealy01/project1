@@ -176,7 +176,7 @@ function getDataStore(response){
     if(localStorage.getItem('movieObject')==null){
 
     
-    localStorage.setItem('movieObject',response);
+    localStorage.setItem('movieObject',movieObject.title);
     console.log(localStorage);
     }
     let old_data=JSON.parse(localStorage.getItem('movieObject'));
@@ -184,7 +184,7 @@ function getDataStore(response){
     localStorage.setItem('movieObject',JSON.stringify(old_data));
     console.log(movieObject)
     
-   
+
 
     }
 function displayWatchList(response){
@@ -202,11 +202,12 @@ function displayWatchList(response){
 
     watchList.appendChild(watchListItem1);
 
+
     getDataStore(response)
     
- 
     
-    
+    localStorage.setItem("movieObject",movieObject.title);
+    console.log(localStorage)
     
    console.log(movieObject)
 
@@ -216,10 +217,11 @@ function displayWatchList(response){
 
 function displayMovieSug(data){
     
-   
-        var title=document.getElementById('title').value;
+   var movieTitle=localStorage.getItem('movieObject');
+        var title=document.getElementById('title');
+        console.log(movieTitle)
        
-        var apiUrl = 'http://omdbapi.com/?t='+ title +'&apikey=4b6a7602';
+        var apiUrl = 'http://omdbapi.com/?t='+movieTitle+'&apikey=4b6a7602';
     
         // Fetch from OMDB and store information inside our movie object
         fetch(apiUrl)
@@ -235,7 +237,7 @@ function displayMovieSug(data){
     
                     
                     showInfo(movieObject);
-                    console.log(movieObject)
+                    
                          
         
     
@@ -249,27 +251,13 @@ function displayMovieSug(data){
 function deleteWatchLIstItem(watchList){
     
     
-    var watchListItem1 =document.getElementsByClassName('liElement')
+    var watchListItem1 =document.querySelector('.liElement')
     var watchList=document.querySelector('#watch-list');
     const button=document.getElementById('#delete-btn');
-    
-        watchList.parentNode.removeChild(watchListItem1)
-    
-    
-    
-        watchList.removeChild(watchListItem1);
+         watchList.removeChild(watchListItem1);
         
 
     }
-
- /*   
-
-watchList.removeChild(watchListItem1)
-*/
-
-
-
-
 
 
 
